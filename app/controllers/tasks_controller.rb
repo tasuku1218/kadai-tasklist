@@ -3,19 +3,11 @@ class TasksController < ApplicationController
     before_action :set_task, only: [:show, :edit, :update, :destroy]
     
     def index
-      @task = current_user.tasks.find_by(id: params[:id])
-      unless @task
-      flash[:danger] = '再ログイン'
-      redirect_to login_url
-      end
+
     end 
     
     def show
-      @task = current_user.tasks.find_by(id: params[:id])
-      unless @task
-        flash[:danger] = '再ログイン'
-        redirect_to login_url
-      end
+
     end 
     
     def new
@@ -35,11 +27,7 @@ class TasksController < ApplicationController
     end
     
     def edit
-      @task = current_user.tasks.find_by(id: params[:id])
-      unless @task
-        flash[:danger] = '再ログイン'
-        redirect_to login_url
-      end 
+
     end
     
     def update
@@ -62,7 +50,11 @@ class TasksController < ApplicationController
 private
 
 def set_task
-    @task = Task.find(params[:id])
+      @task = current_user.tasks.find_by(id: params[:id])
+      unless @task
+        flash[:danger] = '再ログイン'
+        redirect_to login_url
+      end 
 end
 
 
